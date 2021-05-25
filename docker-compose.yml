@@ -1,0 +1,18 @@
+version: "3.8"
+services:
+  app:
+    build: .
+    tty: true
+    # Go アプリではなく、ここではホットリローダー air を起動しておく
+    command: air -c .air.toml
+    ports:
+      - "9999:9999"
+    volumes:
+      - type: bind
+        source: .
+        target: /go/src/app
+      - type: volume
+        source: go-modules
+        target: /go/pkg/mod
+volumes:
+  go-modules:
