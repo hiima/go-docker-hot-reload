@@ -1,18 +1,19 @@
 version: "3.8"
 services:
   app:
-    build: .
-    tty: true
-    # Go アプリではなく、ここではホットリローダー air を起動しておく
-    command: air -c .air.toml
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - "9999:9999"
+      - "8080:8080"
     volumes:
       - type: bind
         source: .
         target: /go/src/app
       - type: volume
-        source: go-modules
+        source: go_modules
         target: /go/pkg/mod
+    tty: true
+    command: "air -c .air.toml"
 volumes:
-  go-modules:
+  go_modules:
